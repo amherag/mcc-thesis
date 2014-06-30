@@ -8,6 +8,7 @@
 *.lot
 *.pdf
 *.toc
+.DS_Store
 README.bibliography
 README.main
 README.text
