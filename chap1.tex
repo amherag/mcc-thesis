@@ -1,0 +1,85 @@
+%% This is an example first chapter.  You should put chapter/appendix that you
+%% write into a separate file, and add a line \include{yourfilename} to
+%% main.tex, where `yourfilename.tex' is the name of the chapter/appendix file.
+%% You can process specific files by typing their names in at the 
+%% \files=
+%% prompt when you run the file main.tex through LaTeX.
+
+\chapter{Introducción}
+
+Es común la existencia de sistemas de aprendizaje que utilizan técnicas de computación inteligente para realizar adaptaciones en el contenido didáctico o en la interfaz del usuario, lo cual resulta en un Sistema de Tutoría Inteligente (STI). Es útil que un sistema de tutoría inteligente adapte su contenido o interfaz de usuario ya que le puede facilitar al estudiante su aprendizaje. Las formas en las que un STI puede ayudar al aprendizaje pueden ser muy variadas, como adaptar la interfaz del usuario para que el estudiante no pierda tiempo o esfuerzo en encontrar su camino a través del sistema; o puede, a través de un sistema de recomendación u otra técnica, determinar qué ejercicios están al nivel intelectual o de habilidad del alumno.
+
+En este trabajo se inicia la propuesta de un método para recomendar ejercicios para el aprendizaje de programación de computadoras. Sin embargo, surge la pregunta de cómo es que el sistema va a determinar qué ejercicios recomendar, y cuál es el camino que se debe tomar para aumentar el aprendizaje del alumno. Por ejemplo, un tutor del estudiante podría darle información al STI sobre qué desempeño es el que está demostrando tener el alumno, y en base a esta información, el STI podría recomendar ejercicios más fáciles o más difíciles. Pero esto sólo aumenta el número de preguntas que debemos hacernos sobre el sistema: ¿es una buena idea confiar en el juicio del tutor sobre el desempeño del estudiante?, ¿qué significa que el estudiante tenga un buen o mal desempeño?, ¿qué datos podríamos utilizar para poder determinar automáticamente el desempeño del estudiante?, ¿en base a qué característica se deben recomendar los ejercicios?, ¿qué clase de impacto es el que se desea conseguir en el estudiante con los ejercicios recomendados?
+
+El método propuesto en esta tesis decide utilizar técnicas de \textit{machine learning}, específicamente modelos de clasificación basados en redes neuronales, para determinar el desempeño del alumno. Sin embargo, como se menciona en el párrafo anterior, el concepto de desempeño puede llegar a ser ambigüo. Para este método, el desempeño del alumno es explicado en base a sus estados mentales o emociones, y nos enfocamos específicamente en seis estados mentales: frustración, aburrimiento, distracción, relajamiento, concentración y entusiasmo. El contenido de este documento se enfoca en cómo es que se logró la clasificación del estudiante de acuerdo a estos estados mentales. En un trabajo futuro, se utilizarán estas clasificaciones para determinar una secuencia de ejercicioss que aumente el aprendizaje en el estudiante.
+
+\section{Descripción del problema}
+
+Un estudiante que interactúa con un sistema de tutorías experimentará diferentes estados mentales mientras realiza las actividades de aprendizaje presentadas por el sistema [9]. Hay varios estados mentales que un estudiante puede experimentar, tales como apatía, si perciben que la actividad de aprendizaje es demasiado fácil, pero perciben sus habilidades como no aptas o lo suficientemente altas mientras están realizando la actividad; ansiedad, si la dificultad es demasiado alta y su habilidad es baja; relajamiento, si la dificultad es baja, pero las habilidades del estudiante son altas; y finalmente, un estudiante debería experimentar fluidez si la dificultad de la actividad es alta, sin embargo, el estudiante se percibe así mismo como capaz de resolver los problemas que presenta dicha actividad. Mihaly Csikszentmihalyi estableció esta relación entre dificultad y habilidad, y diferentes estados mentales [3]. Es importante notar que los niveles de dificultad y la habilidad usados para definir el nivel de fluidez de un estudiante deben ser los niveles como son percibidos por los mismos estudiantes, y no por un observador, por ejemplo.
+
+%Figura
+
+La figura \ref{mental-states-flow} ilustra la relación entre las habilidades de un individuo y el nivel de dificultad de una actividad. Este es un modelo propuesto por Csikszentmihalyi en 1997 [3]. Como se muestra en esta figura, para que una persona logre un estado de fluidez, ésta debe percibir una dificultad grande por parte de la actividad que está desempeñando, pero también debe sentirse cómodo con su rendimiento. Otros estados mentales pueden ser logrados al variar los niveles de habilidad y dificultad.
+
+Si un sistema interactivo es capaz de predecir si un usuario se encuentra en un estado de fluidez, el sistema podría usar esta medida para tomar mejores decisiones en la determinación de qué contenido debe ser mostrado al usuario, y cómo. Ha habido un incremento en el interés en los métodos usados en la investigación sobre la fluidez, y muchas de las herramientas que se usan para medir la fluidez aún son métodos manuales, tales como entrevistas [11]. Si un sistema, tal como un sistema de tutorías inteligente, pudiera asegurar un estado mental de fluidez a sus usuarios, se podría conseguir una mejor experiencia de aprendizaje [5].
+
+Este trabajo es un paso para llegar a la correcta estimación de la fluidez, a través de otros estados mentales que se consideran como base para éste, y poder llegar a recomendar contenido que mantenga a un individuo en fluidez o que eleve su nivel de fluidez.
+
+\section{Descripción de la investigación}
+
+A veces, una persona, mientras está realizando una actividad, experimentará un estado mental de profundo enfoque, entrega y alegría durante el transcurso de la actividad. Este estado mental es conocido como fluidez, un término propuesto por Mihaly Csikszentmihalyi [4]. La fluidez está estrechamente relacionada con la motivación, siendo la principal diferencia que la motivación es la razón o causa psicológica de cualquier acción [16]. De esta forma, una persona puede estar muy motivada a ejecutar y continuar la ejecución de cierta acción, pero no necesariamente estar en un estado de fluidez.
+
+Al comienzo de esta investigación se experimentó con el concepto de fluidez, para determinar si era posible predecir este único estado mental. El propósito de este enfoque inicial era entender de qué manera se podría estimar la fluidez o clasificar a una persona si está experimentando el estado de fluidez o no. Con este comienzo se descubrió que era difícil saber el valor real de este estado mental en un individuo, ya que los participantes del experimento no conocían bien el concepto de fluidez. Otro problema que se presentó fue que las características que se extrajeron para realizar la clasificación eran muy pocas, y fue muy difícil, aunque posible, conseguir un modelo de clasificación exitoso. El último obstáculo que se encontró fue la plataforma con la que se hicieron los experimentos. Se creó un pequeño prototipo de un sistema de tutorías en donde el estudiante necesitaba contestar seis problemas de programación de computadoras del lenguaje de programación newLISP. Esta plataaforma no fue bien diseñada para soportar un desarrollo escalable en donde pudieramos incorporar las nuevas ideas que fueran surgiendo sobre la investigación.
+
+A consecuencia del primer experimento realizado, se planificó una nueva metodología para extraer las características necesarias para el modelo de clasificación. También se extendió una plataforma de aprendizaje llamada Protoboard, con el fin de poder realizar uno recomendación de la secuencia de ejercicios a los estudiantes en trabajos futuros.
+
+En el segundo experimento se optó por clasificar al estudiante en seis diferentes estados mentales, los cuales se consideran hipotéticamente como bases para la fluidez: frustración, aburrimiento distracción, relajamiento, concentración y entusiasmo. De esta forma, si un estudiante tiene una baja frustración, no está distraído ni aburrido, está relajado, y está concentrado y entusiasmado por estar resolviendo los problemas de programación, se cree que debería estar experimentando un estado de fluidez o un estado cercano a éste. De esta forma, en el experimento se intentaron predecir estados mentales que resultaban más familiares a los participantes.
+
+Durante la interacción del estudiante con el sistema de tutorías inteligente de Protoboard, se presentan una serie de objetos de aprendizaje que deben ser tomados secuencialmente. Estos objetos de aprendizaje contienen videos didácticos, los propios ejercicios de programación, y encuestas. Los videos didácticos deben ser vistos por el estudiante antes de comenzar los ejercicios, y el estudiante puede volver a ellos en cualquier momento antes de seguir resolviendo un problema. Los ejercicios de programación fueron cambiados del lenguaje newLISP a Python, ya que Python es un lenguaje de programación más popular y tiene una sintaxis que es más familiar a la mayoría de los participantes del experimento. Después de cada experimento, al estudiante se le presentó una encuesta, la cuál sigue los principios de el Método de Muestreo de Experiencia (MME), desarrollado por el psicólogo húngaro Mihaly Csikszentmihalyi. El MME consiste en una serie de preguntas con posibles respuestas en escala Likert, que se aplica cada cierto intervalo de tiempo. Según las recomendaciones para la aplicación de un MME, el investigador puede elegir el intervalo de tiempo que separa a cada encuesta, así que se decidió aplicar el MME después de cada ejercicio de programación. Para este experimento se construyeron diez ejercicios, los cuales van incrementándose en dificultad conforme el estudiante progresa en el curso.
+
+Para la extracción de las características, se tomó la decisión de dar enfoque a la dinámica de tecleo y dinámica de ratón. La dinámica de tecleo consiste en el registro y análisis de cada una de las pulsaciones de teclas que se efectúan por parte del usuario en un teclado de computadora. Similarmente, la dinámica de ratón registra los movimientos que se efectúan en el ratón, así como la pulsación de sus botones. Todos estos registros de pulsaciones y movimientos fueron preprocesados y con éstos se creó un modelo de clasificación basado en redes neuronales.
+
+Al final, se obtuvieron buenos resultados, y se demostró que se puede clasificar a un estudiante de acuerdo a los seis estados mentales mencionados, utilizando dinámica de tecleo y dinámica de ratón, y un modelo basado en redes neuronales.
+
+\section{Objetivo General de la Investigación}
+
+El objetivo general de este trabajo es proponer un método innovador basado en redes neuronales y dinámica de tecleo y dinámica de ratón, para la clasificación de un estudiante, durante su interacción con un sistema de tutoría inteligente enfocado a la enseñanza de lenguajes de programación, en seis estados mentales: frustración, aburrimiento distracción, relajamiento, concentración y entusiasmo.
+
+\section{Objetivos Específicos de la Investigación}
+
+Los objetivos específicos que se cubrieron a lo largo de esta tesis se presentan a continuación:
+
+\begin{enumerate}
+\item Construir un prototipo de un sistema de tutorías inteligente que registre características básicas sobre la interacción de un usuario con éste.
+\item Desarrollar un modelo de clasificación basado en redes neuronales para el estado mental de fluidez, utilizando las características extraídas en el prototipo mencionado anteriormente.
+\item Analizar los resultados obtenidos con el modelo mencionado anteriormente.
+\item Desarrollar una metodología para la extracción de características basada en dinámica de tecleo y dinámica de ratón.
+\item Adaptar la plataforma de enseñanza de Protoboard para la extracción de las características mencionadas anteriormente.
+\item Desarrollar un modelo de clasificación basado en redes neuronales para los estados mentales de frustración, aburrimiento distracción, relajamiento, concentración y entusiasmo.
+\item Analizar los resultados obtenidos con el modelo mencionado anteriormente.
+\end{enumerate}
+
+\section{Estructura del Documento de Tesis}
+
+Este documento de tesis está estructurado de la siguiente forma:
+
+\begin{description}
+
+\item[Capítulo 2] Se describe lo que es la computación afectiva, y cómo es que su estudio se involucra en el proceso de esta investigación. Además, se trata a fondo el tema del estado mental de fluidez.
+
+\item[Capítulo 3] Se presenta un análisis del concepto y la arquitectura general de los sistemas de tutoría inteligente. Una descripción de la plataforma de Protoboard se incluye en este capítulo.
+
+\item[Capítulo 4] En este capítulo se describen las características que pueden ser extraídas utilizando dispositivos de entrada, tales como el teclado, el ratón y otros. Se da además una explicación más detallada de la dinámica de tecleo y la dinámica de ratón.
+
+\item[Capítulo 5] Una explicación sobre la clasificación por medio de técnicas de \textit{machine learning} es presentada, además de información sobre cuatro técnicas de clasificación: árboles de clasificación, k vecinos más cercanos, redes bayesianas, y redes neuronales.
+
+\item[Capítulo 6] Se describe a más detalle el método propuesto en esta tesis.
+
+\item[Capítulo 7] El diseño e implementación del método propuesto son presentados en este capítulo.
+
+\item[Capítulo 8] Se presentan los experimentos y resultados generados con la implementación del método propuesto.
+
+\item[Capítulo 9] Se explican las conclusiones y el trabajo futuro.
+
+\end{description}
+

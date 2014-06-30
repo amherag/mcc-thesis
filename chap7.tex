@@ -1,0 +1,95 @@
+%% This is an example first chapter.  You should put chapter/appendix that you
+%% write into a separate file, and add a line \include{yourfilename} to
+%% main.tex, where `yourfilename.tex' is the name of the chapter/appendix file.
+%% You can process specific files by typing their names in at the 
+%% \files=
+%% prompt when you run the file main.tex through LaTeX.
+
+\definecolor{mygray}{rgb}{0.95,0.95,0.96}
+\definecolor{myblue}{rgb}{0.75,0.70,0.80}
+\definecolor{mygreen}{rgb}{0.1,0.5,0.1}
+
+\chapter{Implementación}
+
+\lstset{language=Lisp, breaklines=true, basicstyle=\footnotesize,  backgroundcolor=\color{mygray}}
+\lstset{numbers=left, numberstyle=\tiny\color{red}, keywordstyle=\color{blue}, rulecolor=\color{myblue}, stringstyle=\color{mygreen}, title=\lstname Codigo,  stepnumber=1, numbersep=-6pt}
+
+\begin{lstlisting}[frame=single]
+ (defun has-digraph? (sub dg)
+  "Used by (digraph-subseq)"
+  (flet ((cdr-ks (elt) (cdr elt)))
+    (let* ((kc1 (caadr dg))
+           (kc2 (cadadr dg))
+           (fst-dwn (remove `("keydown" ,kc1) sub :key #'cdr-ks :test 'equalp :count 1))
+           (snd-dwn (remove `("keydown" ,kc2) fst-dwn :key #'cdr-ks :test 'equalp :count 1))
+           (fst-up (remove `("keyup" ,kc1) snd-dwn :key #'cdr-ks :test 'equalp :count 1))
+           (snd-up (remove `("keyup" ,kc2) fst-up :key #'cdr-ks :test 'equalp :count 1))
+           (fst-kc? (and (= (third (first sub)) kc1) (string= "keydown" (second (first sub)))))
+           (pos-kc1d (position `("keydown" ,kc1) sub :key #'cdr-ks :test 'equalp))
+           (pos-kc1u (position `("keyup" ,kc1) sub :key #'cdr-ks :test 'equalp))
+           (pos-kc2d (position `("keydown" ,kc2) sub :key #'cdr-ks :test 'equalp))
+           (pos-kc2u (position `("keyup" ,kc2) sub :key #'cdr-ks :test 'equalp))
+           (num-kd (count "keydown" sub :test 'string= :key (lambda (elt) (second elt))))
+           )
+      (if (and fst-kc?
+               (= num-kd 2)
+               (when (and (numberp pos-kc1d)
+                          (numberp pos-kc1u)
+                          (numberp pos-kc2d)
+                          (numberp pos-kc2u))
+                 (and (< pos-kc1d pos-kc2d)
+                      (< pos-kc1d pos-kc1u)
+                      (< pos-kc2d pos-kc2u)))
+               (/= (length fst-dwn)
+                   (length snd-dwn)
+                   (length fst-up)
+                   (length snd-up)))
+          T))))
+\end{lstlisting}
+\captionof{lstlisting}{Función para determinar si una subsecuencia contiene a un dígrafo}
+
+
+\begin{lstlisting}[frame=single]
+ (defun has-trigraph? (sub tg)
+  "Used by (trigraph-subseq)"
+  (flet ((cdr-ks (elt) (cdr elt)))
+    (let* ((kc1 (first (cadr tg)))
+           (kc2 (second (cadr tg)))
+           (kc3 (third (cadr tg)))
+           (fst-dwn (remove `("keydown" ,kc1) sub :key #'cdr-ks :test 'equalp :count 1))
+           (snd-dwn (remove `("keydown" ,kc2) fst-dwn :key #'cdr-ks :test 'equalp :count 1))
+           (trd-dwn (remove `("keydown" ,kc3) snd-dwn :key #'cdr-ks :test 'equalp :count 1))
+           (fst-up (remove `("keyup" ,kc1) trd-dwn :key #'cdr-ks :test 'equalp :count 1))
+           (snd-up (remove `("keyup" ,kc2) fst-up :key #'cdr-ks :test 'equalp :count 1))
+           (trd-up (remove `("keyup" ,kc3) snd-up :key #'cdr-ks :test 'equalp :count 1))
+           (fst-kc? (and (= (third (first sub)) kc1) (string= "keydown" (second (first sub)))))
+           (pos-kc1d (position `("keydown" ,kc1) sub :key #'cdr-ks :test 'equalp))
+           (pos-kc1u (position `("keyup" ,kc1) sub :key #'cdr-ks :test 'equalp))
+           (pos-kc2d (position `("keydown" ,kc2) sub :key #'cdr-ks :test 'equalp))
+           (pos-kc2u (position `("keyup" ,kc2) sub :key #'cdr-ks :test 'equalp))
+           (pos-kc3d (position `("keydown" ,kc3) sub :key #'cdr-ks :test 'equalp))
+           (pos-kc3u (position `("keyup" ,kc3) sub :key #'cdr-ks :test 'equalp))
+           (num-kd (count "keydown" sub :test 'string= :key (lambda (elt) (second elt))))
+           )
+      (if (and fst-kc?
+               (= num-kd 3)
+               (when (and (numberp pos-kc1d)
+                          (numberp pos-kc1u)
+                          (numberp pos-kc2d)
+                          (numberp pos-kc2u)
+                          (numberp pos-kc3d)
+                          (numberp pos-kc3u))
+                 (and (< pos-kc1d pos-kc2d)
+                      (< pos-kc2d pos-kc3d)
+                      (< pos-kc1d pos-kc1u)
+                      (< pos-kc2d pos-kc2u)
+                      (< pos-kc3d pos-kc3u)))
+               (/= (length fst-dwn)
+                   (length snd-dwn)
+                   (length fst-up)
+                   (length snd-up)
+                   (length trd-dwn)
+                   (length trd-up)))
+          T))))
+\end{lstlisting}
+\captionof{lstlisting}{Función para determinar si una subsecuencia contiene a un trígrafo}

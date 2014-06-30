@@ -1,0 +1,13 @@
+*.log
+*.aux
+*.gz
+*.bbl
+*.blg
+*.dvi
+*.lof
+*.lot
+*.pdf
+*.toc
+README.bibliography
+README.main
+README.text
