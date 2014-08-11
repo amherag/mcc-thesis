@@ -7,9 +7,159 @@
 
 \chapter{Características Basadas en Dispositivos de Entrada}
 
+Un dispositivo de entrada es cualquier dispositivo periférico usado
+para proveer datos y señales de control a algún sistema de
+procesamiento de información, tales como una computadora. Los ejemplos
+más comunes de estos dispositivos de entrada son teclado, ratón,
+y cámaras digitales.
+
+Muchos dispositivos de entrada pueden ser clasificados de acuerdo a:
+
+\begin{itemize}
+  \item La modalidad de la entrada (moción mecánica, audio, visual)
+  \item Si el dispositivo de entrada es discreto (por ejemplo,
+    pulsación de teclas) o continuo (por ejemplo, la posición de un ratón)
+  \item El número de grados de libertad involucrados (por ejemplo, un
+    ratón tradicional que trabaja en un espacio bidimensional)
+\end{itemize}
+
+La entrada directa casi siempre es necesariamente absoluta, pero la
+entrada indirecta puede ser absoluta o relativa. Por ejemplo, las
+tabletas para la digitalización de gráficos que no tienen una pantalla
+embebida involucra una entrada indirecta y un sensado de posiciones
+absolutas y con frecuencia corren en un modo absoluto de entrada, pero
+también pueden ser configuradas para que puedan simular un modo de
+entrada relativo tal como el de un touchpad, en donde una pluma stylus
+puede ser levantada y reposicionada.
+
+Un teclado es un dispositivo de interfaz humana que es representado
+como una configuración de botones. Cada botón, o tecla, puede ser
+usada como una entrada de un caracter lingüístico a una computadora, o
+para llamar una función en particular de la computadora. Los teclados
+tradicionales usan botones basados en resortes, aunque nuevas
+variaciones usan teclas virtuales, o incluso proyecciones de teclados.
+
+Un dispositivo apuntador es cualquier dispositivo de interfaz humana
+que permite a un usuario introducir datos espaciales a una
+computadora. En el caso de un ratón, esto es usualmente logrado a
+través de la detección del movimiento a través de una superficie
+física. Los dispositivos análogos, tales como los ratones en 3D o los
+joysticks, funcionan reportando su ángulo de deflección. Los
+movimientos de los dispositivos apuntadores son representados en la
+pantalla a través de movimientos del apuntador, creando una forma
+simple e intuitiva de navegar por una interfaz de usuario en la computadora.
+
 \section{Dinámica de Tecleo}
+\label{dinamica-de-tecleo}
+
+El comportamiento biométrico de la dinámica de tecleo usa la forma y
+el ritmo en el cual un individuo introduce caracteres mediante un
+teclado o keypad \cite{deng2013keystroke} \cite{araujo2005user}
+\cite{shepherd1995continuous}. Los ritmos del tecleo de un usuario son
+medidos para desarrollar una plantilla de biométricas únicas de los
+patrones de tecleo del usuario para futuras autenticaciones
+\cite{panasiuk2010modified}. Las mediciones pueden estar disponibles a
+través de casi cualquier teclado para ser registradas para determinar
+el tiempo en el que determinada tecla fue presionada y el tiempo entre
+la pulsación de esta tecla (key down) y su liberación (key up). Estos
+tiempos registrados son después procesados a través de algún
+algoritmo, el cual determina patrones para ser comparados en un futuro
+\cite{chang2011user}. De forma similar, la información acerca de las
+vibraciones puede ser utilizada para crear un patrón para un uso
+futuro tanto en tareas de identificación como de autenticación.
+
+Los datos necesarios para realizar un análisis de dinámica de tecleo
+son obtenidos a través de un registro de pulsaciones. Normalmente,
+todo lo que se registra cuando se realiza este proceso durante una
+sesión, es la secuencia de caracteres correspondiente al orden en el
+que estas teclas fueron presionadas por el usuario, y la información
+de los tiempos en los que sucedieron estas pulsaciones.
+
+Los investigadores están interesados en usar esta información de
+dinámica de tecleo, la cual es normalmente descartada, para verificar
+o incluso determinar la identidad de la persona que está produciendo
+estas pulsaciones de teclas. Esto es frecuentemente posible porque
+algunas características de la producción de tecleo son individuales
+tales como la caligrafía o una firma.
+
+Reglas muy sencillas pueden ser usadas para eliminar posibles usuarios
+en casos simples. Por ejemplo, si sabemos que Juan escribe 20 palabras
+por minuto, y la persona que está haciendo uso del teclado está
+escribiendo a 70 palabras por minuto, podemos descartar a Juan como la
+persona que está escribiendo actualmente. Esta forma de pruebas está
+basada simplemente en la velocidad de escritura. Es solamente una
+prueba de un solo camino, ya que siempre es posible que la gente vaya
+más lento de lo normal, pero es inusual o imposible para ellos que
+obtengan una velocidad el doble de su velocidad normal.
+
+Ha habido muy poco trabajo sobre la aplicación de dinámica de tecleo a
+la computación afectiva. Zimmerman et
+al. \cite{zimmermann2003affective} describen un método para
+correlacionar las interacciones del usuario (teclado y ratón) con un
+estado emocional. Los estados emocionales son inducidos usando
+videos. Sensores psicológicos fueron usados en conjunción con un
+Maniquí de Auto-Valoración \cite{lang1980behavioral}, un método para
+expresar subjetivamente estados emocionales. Los autores encontraron
+diferencias significativas entre los estados neuronales y otros
+estados emocionales, pero no pudieron distinguir entre los estados
+inducidos.
+
+Trabajo reciente por Vizer et al. \cite{vizer2009automated} usó
+características basadas en el tiempo acerca de las pulsaciones de
+teclado de un texto libre en conjunción con características
+lingüísticas para identificar el estrés cognitivo y físico. Ellos
+lograron una clasificación correcta del 62.5\% para el estrés físico y
+un 75\% para el estrés cognitivo, lo cual ellos establecen que es
+comparable con otras soluciones de computación afectiva. Ellos también
+establecen que sus soluciones deberían de ser probadas con habilidades
+variadas en escritura y diferentes teclados, con habilidades
+cognitivas y físicas variadas, y en situaciones estresantes del mundo real.
+
+En este trabajo se utiliza la dinámica de tecleo, en conjunto con la
+dinámica de ratón, para la predicción de estados emocionales, lo cual
+es un campo relativamente nuevo, ya que la mayor parte de la
+investigación se ha centrado en la autenticación de usuarios.
 
 \section{Dinámica de Ratón}
+\label{dinamica-de-raton}
 
+La dinámica de ratón describe el comportamiento de un individuo con un
+dispositivo de computadora de apuntador, tal como un ratón o un
+touchpad. Recientemente, la dinámica de ratón ha sido propuesta como
+una biométrica de comportamiento, bajo la premisa de que el
+comportamiento del ratón es relativamente único entre diferentes
+personas. La dinámica de ratón no es la única biométrica de
+comportamiento que ha sida propuesta basada en un dispositivo de
+interacción humana. La dinámica de tecleo (Sección
+\ref{dinamica-de-tecleo}), la cual mide los ritmos únicos de tecleo de
+un individuo, ha sido el tema de una considerable cantidad de
+investigaciones a lo largo de las últimas décadas y us uso para
+autenticación ha mostrado buenos resultados
+\cite{monrose2000keystroke}. Dado que una gran parte de la interacción
+entre un humano y una computadora en estos días involucra a algún
+dispositivo de apuntador, usar la dinámica de ratón para la
+autenticación era un paso obvio.
 
+En el contexto de la autenticación, la biométrica tiene varias
+ventajas sobre las técnicas de autenticación tradiconales que
+verifican la identidad sobre algo que un individuo conoce (por
+ejemplo, una contraseña) o algo que tiene (por ejemplo, una tarjeta de
+identificación). En particular, las biométricas no pueden ser
+olvidadas o robadas. Adicionalmente, las biométricas basadas en los
+dispositivos de interacción de humano-computadora tienen la ventaja de
+que son menos molestas que las biométricas y no requieren un hardware
+especializado para capturar los datos biométricos necesarios.
 
+Mientras que la autenticación por medio de dinámica de tecleo ha sido
+estudiada exhaustivamente durante las últimas tres décadas, la
+dinámica de ratón ha ganado interés sólamente en la última década. En
+general, la dinámica de ratón parece demostrar que es una buena
+técnica de autenticación en las últimas propuestas recientes
+\cite{ahmed2007new} \cite{gamboa2004behavioral}, las cuales reportan
+tazas de error mejores o comparables a otras biométricas bien
+establecidas, tales como reconocimiento de voz y rostro.
+
+En este trabajo se utiliza la dinámica de ratón, en conjunto con la
+dinámica de tecleo, para la predicción de estados emocionales, lo cual
+es un campo relativamente nuevo, ya que la mayor parte de la
+investigación se ha centrado en la autenticación de usuarios.

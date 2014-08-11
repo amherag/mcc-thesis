@@ -6,3 +6,176 @@
 %% prompt when you run the file main.tex through LaTeX.
 
 \chapter{Método Propuesto}
+
+Para la clasificación de una persona de acuerdo a sus emociones a
+través de dinámica de tecleo y dinámica de ratón, se necesitó crear un
+sistema de tutoría inteligente. Este sistema fue basado en uno ya
+existente llamado Protoboard (ver Sección \ref{protoboard}). Para que
+cumpliera con nuestras necesidades, se tuvieron que hacer
+implementaciones adicionales, entre ellas: que fuera capaz de mostrar un curso
+completo de algún lenguaje de programación, así como ser capaz de
+calificar al alumno si pudo realizar sus ejercicios correctamente,
+mostrar diferentes tipos de objetos de aprendizaje (por ejemplo, videos,
+ejercicios y encuestas), y poder capturar las pulsaciones que
+realizaba el usuario en el teclado, así como los movimientos y
+pulsaciones de los botones del ratón.
+
+Para entrenar diferentes modelos de clasificación se necesitó obtener
+un dataset con características basadas en dinámica de tecleo y
+dinámica de ratón, además de otras características, como el número de
+intentos que necesitó un estudiante para llegar a la solución. Para
+obtener estos datos se construyó un curso de programación de Python
+para la plataforma de Protoboard, y se implementó un script en
+Javascript para que registrara cada una de las pulsaciones de teclas
+que realizara un usuario durante un ejercicio. Este script también
+registra los movimientos del ratón, así como los botones que son
+presionados.
+
+La lista de las 39 características se presentan a continuación,
+mostrando su nombre utilizado en los experimentos junto con una
+descripción. Las características basadas en dinámica de tecleo fueron
+inspiradas por el trabajo de Cleyton Epp
+et. al. \cite{epp2011identifying}. En la Tabla \ref{features}, un
+keydown significa el evento que ocurre cuando una tecla o botón es
+presionado, y keyup es el evento que ocurre cuando éste es liberado.
+
+\begin{center}
+  \label{features}
+  \begin{table}
+  \scriptsize
+  \begin{tabular}{| p{4cm} | p{10cm} |}
+    \hline
+    Nombre & Descripción \\ \hline
+    2G\_1D2D\_MEAN & Tiempo promedio entre la 1ra (keydown) y 2da (keydown) tecla en un dígrafo\\ \hline
+    2G\_1D2D\_SD & Desviación estándar de la característica anterior \\ \hline
+    2G\_1Dur\_MEAN & Tiempo promedio entre el keydown y keyup de la 1ra
+    tecla en un dígrafo \\ \hline
+    2G\_1Dur\_SD & Desviación estándar de la característica anterior \\ \hline
+    2G\_1KeyLat\_MEAN &  Tiempo promedio entre la 1ra (keyup) y el
+    siguiente keydown en un dígrafo \\ \hline
+    2G\_1KeyLat\_SD & Desviación estándar de la característica anterior \\ \hline
+    2G\_2Dur\_MEAN & Tiempo promedio entre el keydown y keyup de la 2da
+    tecla en un dígrafo \\ \hline
+    2G\_2Dur\_SD & Desviación estándar de la característica anterior \\ \hline
+    2G\_Dur\_MEAN & Tiempo promedio entre el primer keydown y el último
+    keyup de un dígrafo \\ \hline
+    2G\_Dur\_SD & Desviación estándar de la característica anterior \\ \hline
+    2G\_NumEvents\_MEAN & Promedio del número de eventos contenidos en
+    un dígrafo \\ \hline
+    2G\_NumEvents\_SD & Desviación estándar de la característica anterior \\ \hline
+    3G\_1D2D\_MEAN & Tiempo promedio entre la 1ra (keydown) y 2da
+    (keydown) teclas de un trígrafo \\ \hline
+    3G\_1D2D\_SD & Desviación estándar de la característica anterior \\ \hline
+    3G\_1Dur\_MEAN & Tiempo promedio entre el keydown y keyup de la 1ra
+    tecla en un trígrafo \\ \hline
+    3G\_1Dur\_SD & Desviación estándar de la característica anterior \\ \hline
+    3G\_1KeyLat\_MEAN & Tiempo promedio entre el keyup de la 1ra tecla y
+    el siguiente keydown en un trígrafo\\ \hline
+    3G\_1KeyLat\_SD & Desviación estándar de la característica anterior \\ \hline
+    3G\_2D2D\_MEAN & Tiempo promedio entre la 2da (keydown) y 3ra
+    (keydown) teclas en un trígrafo \\ \hline
+    3G\_2D2D\_SD & Desviación estándar de la característica anterior \\ \hline
+    3G\_2Dur\_MEAN & Tiempo promedio entre el keydown y keyup de la 2da
+    tecla en un trígrafo \\ \hline
+    3G\_2Dur\_SD & Desviación estándar de la característica anterior \\ \hline
+    3G\_2KeyLat\_MEAN & Tiempo promedio entre el keyup de la 2da tecla y
+    el siguiente keydown en un trígrafo\\ \hline
+    3G\_2KeyLat\_SD & Desviación estándar de la característica anterior \\ \hline
+    3G\_3Dur\_MEAN & Tiempo promedio entre el keydown y keyup de la
+    última tecla en un trígrafo \\ \hline
+    3G\_3Dur\_SD & Desviación estándar de la característica anterior \\ \hline
+    3G\_Dur\_MEAN & Tiempo promedio entre el keydown de la 1ra tecla y
+    el último keyup en un trígrafo \\ \hline
+    3G\_Dur\_SD & Desviación estándar de la característica anterior \\ \hline
+    3G\_NumEvents\_MEAN & Promedio del número de eventos contenidos en
+    un trígrafo \\ \hline
+    3G\_NumEvents\_SD & Desviación estándar de la característica anterior \\ \hline
+    Mouse\_Presses\_Dur\_MEAN & Tiempo promedio entre el keydown y keyup
+    de algún botón del ratón \\ \hline
+    Mouse\_Presses\_Dur\_SD & Desviación estándar de la característica anterior \\ \hline
+    Mouse\_Movement\_Dur\_MEAN & Tiempo promedio de todos los movimientos
+    del ratón\\ \hline
+    Mouse\_Movement\_Dur\_SD & Desviación estándar de la característica anterior \\ \hline
+    Mouse\_Movement\_X\_MEAN & Promedio de la distancia recorrida en
+    pixeles en la coordenada X por el ratón \\ \hline
+    Mouse\_Movement\_X\_SD & Desviación estándar de la característica anterior \\ \hline
+    Mouse\_Movement\_Y\_MEAN & Promedio de la distancia recorrida en
+    pixeles en la coordenada Y por el ratón \\ \hline
+    Mouse\_Movement\_Y\_SD & Desviación estándar de la característica anterior \\ \hline
+    Attempts & Número de intentos requeridos para llegar a la
+    solución del ejercicio \\ \hline
+  \end{tabular}
+  \caption{Tabla de características usadas}
+  \end{table}
+\end{center}
+
+Para asociar estas características extraídas con una clase o etiqueta,
+a los usuarios se les presenta una encuesta que sigue las
+especificaciones del Método de Muestreo de Experiencia (ver Sección
+\ref{esm}, en donde a los usuarios se les pregunta cuales son los
+niveles de seis sentimientos que experimentaron durante sus intentos
+por resolver el ejercicio anterior. De esta forma, un usuario si se
+sentía muy frustrado, y para nada relajado, puede registrarlo en esta
+encuesta. Se desarrollaron diez ejercicios, así que los usuarios
+tienen que responder a diez encuestas si es que completan todo el
+curso.
+
+La plataforma de Protoboard puede ser accedida a través de
+http://app.protoboard.org/.
+Esta aplicación web se dejó
+abierta para que cualquier estudiante que quisiera entrar a intentar
+resolver el curso de Python pudiera hacerlo. Es importante notar que
+los estudiantes no estaban obligados a terminar todo el curso.
+
+Una vez que se extrajeron todos los datos, se comenzó con el
+preprocesamiento de estos. Este preprocesamiento está basado en las
+guías mencionadas en el trabajo por Clayton Epp
+et. al. \cite{epp2011identifying}. Para ver una descripción más
+detallada y técnica, uno se puede dirigir a la Sección
+\ref{implementacion}. En general, se extrajeron un total de 39
+características, 8 corresponden a dinámica de ratón, 30 a dinámica de
+tecleo, y 1 que corresponde al número de intentos que necesitó el
+usuario para poder llegar a la solución del ejercicio. El
+preprocesamiento involucra obtener el promedio y la desviación
+estándar de la diferencia entre los tiempos de los 100 dígrafos y
+trígrafos más frecuentes dentro de los datos en el dataset. En el caso
+del ratón, se obtiene el promedio y la desviación estándar de los
+movimientos en las coordenadas X y Y dentro de la ventana del
+explorador, así como la duración entre diferentes eventos de los
+botones en el ratón, y la duración de los movimientos.
+
+Un dígrafo, en este contexto, significa cualquier combinación de dos
+teclas realizadas por parte del usuario con el teclado de
+computadora. Un trígrafo es similar, pero siendo una combinación de
+tres teclas.
+
+Un paso adicional que se tomó es que los datos generados por la
+encuesta del método de muestreo de experiencia fueron reducidos. En
+lugar de manejar una clase nominal con cinco posibilidades (de muy en
+desacuerdo a muy de acuerdo, ver Sección \ref{implementacion}), se
+manejaron solamente tres (bajo, medio y alto, ó 0, 1 y 2).
+
+Una vez preprocesados los datos, se crearon clasificadores basados en
+redes neuronales (ver Sección \ref{ann}), árboles de decisión (ver
+Sección \ref{j48}), clasificador bayesiano ingenuo (ver Sección
+\ref{naive}), y k vecinos más cercanos (ver Sección \ref{knn}),
+tomando estos datos como entrenamiento y prueba.
+
+Se realizaron pruebas preliminares y se obtuvieron malos resultados
+usando la totalidad de las características dentro del dataset. Por
+esta razón se optó por atacar el problema desde la perspectiva de
+encontrar un subconjunto de características que pudieran facilitar la
+creación de un clasificador efectivo. En otras palabras, se buscaron,
+dentro de las 39 características iniciales, cuáles de estas podían
+funcionar mejor como datos de entrada para cada uno de los
+clasificadores.
+
+En la Sección \ref{eyr}, Experimentos y Resultados, se presentan los
+subconjuntos de características que funcionaron mejor para cada uno de
+los clasificadores, y para cada uno de los estados emocionales, así
+como las precisiones y el coeficiente de Kappa que se obtuvieron. El
+objetivo en cada uno de estos entrenamientos era lograr una precisión
+cercana al 60\%, y un Kappa de por lo menos 0.21 o muy cercano a
+éste. La justificación de éstos valores es que 60\% es considerado
+bastante bueno en aplicaciones reales \cite{epp2011identifying}, y un
+Kappa de 0.21 es considerado como suficiente \cite{landis1977measurement}.

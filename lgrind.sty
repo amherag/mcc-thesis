@@ -167,14 +167,14 @@
 \def\@@lagrind[#1]#2#3#4{%
     \begin{figure}[#1]
 \ifLGnorules\else\hrule\fi
-\vskip .5\baselineskip
+\vskip .1\baselineskip
 \begin{minipage}\columnwidth\LGsize\LGindent\z@
     \begin{lgrind}
 \input #2\relax
     \end{lgrind}
 \end{minipage}
-\vskip .5\baselineskip plus .5\baselineskip
-\ifLGnorules\else\hrule\fi\vskip .5\baselineskip
+\vskip .1\baselineskip plus .1\baselineskip
+\ifLGnorules\else\hrule\fi\vskip .1\baselineskip
 \begingroup
     \setbox\z@=\hbox{#4}%
     \ifdim\wd\z@>\z@

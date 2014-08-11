@@ -7,10 +7,211 @@
 
 \chapter{Modelos de Clasificación}
 
+La clasificación es el problema de identificar a qué conjunto de
+categorías una observación pertenece, de acuerdo a un conjunto de
+datos de entrenamiento que contiene observaciones cuya membersesía a
+una categoría es conocida. Un ejemplo sería asignar a un correo
+electrónico la etiqueta de "spam'' o "no spam'', o asignar un
+diagnóstico a algún paciente descrito de acuerdo a características
+observadas del paciente.
+
+En la terminología de machine learning
+\cite{alpaydin2004introduction}, la clasificación es considerada como
+una instancia del aprendizaje supervisado, o en otras palabras,
+aprendizaje de acuerdo a un conjunto de observaciones correctamente
+identificadas. El procedimiento no supervisado correspondiente es
+conocido como clustering, e involucra el agrupamiento de datos en
+categorías basado en alguna medición inherente entre similitudes o
+distancias entre las observaciones.
+
+Con frecuencia, las observaciones individuales son analizadas de
+acuerdo a un conjunto de propiedades cuantificables, conocidas como
+características. Estas propiedades pueden ser categóricas, ordinales,
+enteras o reales. Otros clasificadores trabajan al comparar
+observaciones con observaciones anteriores de acuerdo a alguna función
+de similaridad o de distancia.
+
+En este trabajo, se obtuvo un conjunto de observaciones en donde a un
+determinado estado emocional se le asocia un conjunto de
+características basadas en dinámica de tecleo (Sección
+\ref{dinamica-de-tecleo}) y dinámica de ratón (Sección
+\ref{dinamica-de-raton}), además de otras características como el
+número de intentos que necesito un alumno para llegar a una solución
+para un problema o el tiempo total de una sesión.
+
 \section{Árboles de Decisión}
+\label{j48}
+
+Un árbol de decisión es una herramienta para la toma de decisiones que
+usa un grafo en forma de árbol para las decisiones y las posibles
+consecuencias de estas decisiones, incluyendo la probabilidad de que
+cierto evento ocurra, los costos de los recursos, y la utilidad. Es
+una forma de desplegar un algoritmo.
+
+Los árboles de decisión son usados comunmente en investigación de
+operaciones, específicamente en el análisis de decisiones, para ayudar
+a identificar estrategias para conseguir ciertos objetivos.
+
+Un árbol de decisión es una estructura con forma de diagrama de flujo
+en el cual los nodos internos representan una prueba en algún atributo
+(por ejemplo, si el lanzamiento de una moneda da como resultado cabeza
+o cruz), cada rama representa el resultado de la prueba y cada nodo
+hoja representa una clase (la decisión que se va a tomar después de
+procesar todos los atributos). Los caminos desde la raíz hasta las
+hjas representan reglas de clasificación.
+
+En un análisis de decisión, un árbol de decisión y su diagrama son
+usados como una herramienta visual para el análisis en la toma de
+decisiones, donde los valores esperados (o la utilidad esperada) de
+cada una de las alternativas competentes es calculada.
+
+Un árbol de decisión consiste en tres tipos de nodos:
+
+\begin{itemize}
+  \item Nodos de decisión - comunmente representados por cuadrados
+  \item Nodos de probabilidad - representados por círculos
+  \item Nodos de fin - Representados por triángulos
+\end{itemize}
+
+Dentro de las herramientas de apoyo a la toma de decisiones, los
+árboles de decisión tienen varias ventajas:
+
+\begin{itemize}
+  \item Son simples de entender e interpretar
+  \item Otros posibles escenarios pueden ser añadidos
+  \item Los valores peor, mejor y esperado pueden ser determinados
+    para diferentes escenarios
+  \item Pueden ser combinados con otras técnicas.
+\end{itemize}
+
+Y entre las desventajas de los árboles de decisión:
+
+\begin{itemize}
+  \item Para datos que incluyen variables categóricas con diferentes
+    números de niveles, la ganancia de información en los árboles de
+    decisión está sesgada en favor de aquellos atributos con más
+    niveles \cite{deng2011bias}
+    \item Los cálculos pueden ser muy complejos, particularmente si
+      hay muchos valores inciertos o si hay muchos resultados enlazados
+\end{itemize}
+
+En machine learning, se puede aplicar un algoritmo que determine un
+árbol de decisiones en base a un conjunto de características que dan
+una clasificación correcta a una determinada etiqueta.
+
+
 
 \section{k-NN}
+\label{knn}
 
-\section{Redes Bayesianas}
+En reconocimiento de patrones, el algoritmo de los k vecinos más
+cercanos (o k-NN) es un método no paramétrico usado para
+clasificación y regresión \cite{altman1992introduction}.
 
-\section{Redes Neuronales}
+En la clasificación k-NN, la salida del modelo us una membresía de
+clase. Un objeto es clasificado de acuerdo a la mayoría de votos de
+sus vecinos, con el objeto siendo asignado a la clase más común entre
+sus k vecinos más cercanos. k es un entero positivo, típicamente
+pequeño. Si k = 1, entonces el objeto es simplemente asignado a la
+clase de ese vecino más cercano.
+
+En la regresión k-NN, la salida es el valor de la propiedad para el
+objetos. Este valor es el promedio de los valores de sus k vecinos más
+cercanos. k-NN es un tipo de aprendizaje basado en instancias, a
+aprendizaje perezoso, donde la función es sólo aproximada localmente y
+todas las computaciones son deferidas hasta obtener la
+clasificación. El algoritmo k-NN se encuentra dentro de los más
+sencillos de los algoritmos de machine learning.
+
+Tanto para la clasificación como para la regresión, puede ser útil
+para pesar las contribuciones de los vecinos, y de esta forma los
+vecinos más cercanos contribuyen más al promedio que aquellos que
+están distantes. Por ejemplo, un esquema común de ponderación consiste
+en dar a cada vecino un peso de 1/d, donde d es la distancia al vecino.
+
+Los conjuntos de entrenamiento son vectores en un espacio
+multidimensional de características, cada uno con una etiqueta de
+clase. La fase de entrenamiento del algoritmo consiste sólamente en
+almacenar los vectores de características y las etiquetas de clases de
+las muestras de entrenamiento.
+
+En la fase de clasificación, k es una constante definida por el
+usuario, y un vector sin etiquetar es clasificado asignándole la
+etiqueta que sea más frecuente entre las k muestras de entrenamiento
+más cercanas a ese punto.
+
+Una métrica de distancia usada comunmente para variables continuas es
+la distancia Euclidiana. Para variables discretos, tales como
+clasificación de texto, otras métricas pueden ser usadas, tales como
+la distancia Hamming.
+
+\section{Bayes Ingenuo}
+\label{naive}
+
+Los clasificadores Bayesianos asignan la clase más probable a un
+ejemplo dado descrito por su vector de características. Aprender estos
+clasificadores puede ser simplificado enormemente asumiendo que las
+características son independientes entre sí. A pesar de esta
+suposición irreal, el clasificador resultante conocido como Bayes
+ingenuo, es muy exitoso en la práctica, con frecuencia siendo
+competitivo con otras técnicas mucho más sofisticadas
+\cite{hilden1984statistical} \cite{langley1992analysis}
+\cite{friedman1997bayesian} \cite{domingos1997optimality}. El
+clasificador Bayes Ingenuo ha demostrado ser efectivo en muchas
+aplicaciones prácticas, incluyendo clasificación de texto,
+diagnósticos médicos, y administración de sistemas de rendimiento
+\cite{domingos1997optimality} \cite{mitchell1997machine}
+\cite{hellerstein2000recognizing}.
+
+El éxito de los clasificadores de Bayes ingenuos en la presencia de
+características dependientes puede ser explicada de esta forma: la
+optimalidad en términos de pérdida cero-uno (el error de
+clasificación) no está necesariamente relacionado con la calidad del
+ajuste a una distribución de probabilidad. En lugar de esto, un
+clasificador óptimo es obtenido siempre y cuando las distribuciones
+reales y estimadas estén de acuerdo con la clase más probable
+\cite{domingos1997optimality}.
+
+
+\section{Redes Neuronales Artificiales}
+\label{ann}
+
+En machine learning y otros campos relacionados, las redes neuronales
+artificiales son modelos computacionales inspirados por los sistemas
+nerviosos centrales de algunos animales (en particular el cerebro), el
+cual es capaz de realizar tareas de machine learning, así como de
+reconocimiento de patrones. Las redes neuronales artificiales son
+generalmente presentadas como sistemas de neuronas interconectadas,
+las cuales pueden procesar valores de sus entradas.
+
+Por ejemplo, una red neuronal para el reconocimiento de caligrafía
+está definida como un conjunto de neuronas de entrada que pueden ser
+activadas por los pixeles de una imagen de entrada. Después de ser
+pesadas y transformadas por medio de una función (determinada por el
+diseñador de la red neuronal), las activaciones de estas neuronas son
+pasadas a otras neuronas. Este proceso es repetido hasta que,
+finalmente, una neurona de salida es activada. Esto determina qué
+caracter fue leído.
+
+Como ocurre con otros métodos de machine learning, las redes
+neuronales han sido usadas para solucionar una gran variedad de tareas
+que son difíciles de solucionar usando programación basada en reglas,
+incluyendo visión artificial y reconocimiento de voz.
+
+El examinar el sistema nervioso central de los seres humanos inspiró
+el concepto de las redes neuronales. En una red neuronal artificial,
+nodos, conocidos como neuronas, son conectados para formar una red la
+cual imita la biología de una red neuronal. No existe una definición
+formal de lo que es una red neuronal artificial. Sin embargo, una
+clase de modelos estadísticos puede llegar a ser considerado como
+neuronal si posee las siguientes características:
+
+\begin{itemize}
+  \item Consiste en un conjunto de pesos adaptativos
+  \item Es capaz de aproximar funciones no-lineales de acuerdo a sus
+    entradas, a sus salidas
+\end{itemize}
+
+Los pesos adaptativos son conceptualmente fuerzas de conexiones entre
+neuronas, las cuales son activadas durante el entrenamiento y la
+predicción.

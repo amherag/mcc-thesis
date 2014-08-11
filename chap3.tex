@@ -7,6 +7,73 @@
 
 \chapter{Sistemas de Tutoría Inteligente}
 
+Un Sistema de Tutoría Inteligente (ITS) es cualquier programa computacional
+que facilite el aprendizaje de un alumno al momento de interactuar con
+éste sistema de tutorías. Por lo general se utilizan una variedad de
+técnicas de computación inteligente e inteligencia artificial para
+lograr esta facilitación.
 
+Estos sistemas tienen el objetivo de proveer al usuario o estudiante
+con instrucción inmediata y personalizada. De esta forma un ser humano
+no necesita intervenir en el proceso de aprendizaje del alumno, de tal
+forma que se puede brindar ayuda de una forma constante y
+consistente. Los ITS tienen siempre la meta de eficientar el
+aprendizaje y las formas en las que los alumnos llegan a éste. Hay
+muchos casos en donde los ITSs han demostrado ser eficaces para
+cumplir con su principal objetivo, tal como ActiveMath
+\cite{melis2004activemath}, una herramienta basada en la web con el
+objetivo de ayudar al alumno a aprender matemáticas, y AutoTutor
+\cite{graesser2005autotutor}, un ITS en donde se simula a un tutor
+humano que mantiene una conversación con el alumno en lenguaje
+natural.
+
+
+Los Sistemas de Tutoría Inteligente consisten en cuatro componentes
+básicos, los cuales han sido definidos en consenso entre los
+investigadores a través de los años \cite{nwana1990intelligent}
+\cite{freedman2000links} \cite{nkambou2010advances}. Estas cuatro
+partes básicas son las siguientes:
+
+\begin{itemize}
+  \item El modelo del dominio
+  \item El modelo del estudiante
+  \item El modelo del tutor
+  \item El modelo de la interfaz de usuario
+\end{itemize}
+
+El modelo del dominio se encarga de determinar todos los posibles
+pasos requeridos para resolver un problema. En otras palabras, este
+modelo contiene todos los conceptos, reglas, y estrategias del
+dominio que va a ser aprendido \cite{nkambou2010advances}.
+
+El modelo del estudiante puede ser considerado como el núcleo de todo
+sistema de tutoría inteligente, ya que es el que se encarga de evaluar
+el estado cognitivo del estudiante, así como sus estados afectivos y
+su evolución a través del proceso de aprendizaje. Conforme el
+estudiante trabaja paso a paso a través del proceso de solución de
+problemas en el ITS, el sistema lleva a cabo un proceso llamado
+modelo de rastreo. En cualquier momento que el modelo del estudiante
+se desvía del modelo del dominio, el sistema identifica esta
+desviación y marca que un error ha ocurrido.
+
+El modelo del tutor acepta información de los modelos del dominio y
+y del estudiante y toma decisiones acerca de las estrategias y
+acciones que debe tomar el sistema de tutoría inteligente. En
+cualquier momento en el proceso de solución de problemas, el alumno
+puede pedir dirección sobre qué hacer después, en relación con su
+ubicación actual en el modelo. El sistema reconoce cuándo el alumno se
+ha desviado de las reglas de producción del modelo y da
+retroalimentación al usuario, resultando en un periodo más corto para
+alcanzar el aprendizaje \cite{koedinger1997intelligent}. El modelo del
+tutor puede contener varios cientos de reglas de producción que pueden
+tener uno de dos estados, aprendido o no aprendido.
+
+El componente de la interfaz de usuario integra tres tipos de
+informacieon que son necesitados para llevar a cabo un diálogo:
+conocimiento sobre patrones de interpretación (para entender a un
+hablante) y acción (para generar pronunciación) entre diálogos;
+conocimiento del dominio necesario para comunicar contenido; y
+conocimiento necesitado para comunicar la intención \cite{padayachee1999intelligent}.
 
 \section{Protoboard}
+\label{protoboard}

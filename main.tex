@@ -4,7 +4,7 @@
 %%
 %%            Please verify your thesis' formatting and copyright
 %%            assignment before submission.  If you notice any
-%%            discrepancies between these templates and the 
+%%            discrepancies between these templates and the
 %%            MIT Libraries' specs, please let us know
 %%            by e-mailing thesis@mit.edu
 
@@ -38,6 +38,8 @@
 \usepackage{listings}
 \usepackage{color}
 \usepackage{float}
+\usepackage{placeins}
+
 
 \usepackage{ifxetex}
 
@@ -50,7 +52,10 @@
 \fi
 
 \usepackage{caption}
-\DeclareCaptionFormat{myformat}{#1#2#3}
+%\DeclareCaptionFormat{myformat}{#1#2#3}
+\newlength\myindention
+\DeclareCaptionFormat{myformat}%
+{#1#2#3 \hspace*{\myindention}}
 \captionsetup{format=myformat}
 \captionsetup[lstlisting]{position=bottom,format=myformat}
 \renewcommand{\lstlistingname}{Algoritmo}
